@@ -1,0 +1,43 @@
+# order-service.yml
+
+server:
+  port: 8081
+
+spring:
+  application:
+    name: order-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/order_service?createDatabaseIfNotExist=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
+  cloud:
+    circuitbreaker:
+      resilience4j:
+        configs:
+          default:
+            slidingWindowType: COUNT_BASED
+            slidingWindowSize: 5
+            minimumNumberOfCalls: 3
+            failureRateThreshold: 50
+            waitDurationInOpenState: 60s
+        instances:
+          paymentService:
+            baseConfig: default
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 2000
+        readTimeout: 2000
