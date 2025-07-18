@@ -5,6 +5,12 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
+spring:
+  zipkin:
+    base-url: http://localhost:9411   # where your Zipkin server is running
+    sender:
+      type: web                       # use the HTTP sender
+
 management:
   endpoints:
     web:
@@ -13,3 +19,6 @@ management:
   endpoint:
     health:
       show-details: always
+  tracing:
+    sampling:
+      probability: 1.0                # sample 100% of traces (for dev)
