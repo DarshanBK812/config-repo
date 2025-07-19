@@ -46,8 +46,8 @@ spring:
 
 management:
   tracing:
-    enabled: false
-      # probability: 1.0
+     sampling:
+      probability: 1.0
 
 feign:
   client:
